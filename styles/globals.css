@@ -37,3 +37,15 @@ a {
     background: #ccc;
     cursor: not-allowed;
 }
+
+.correct {
+    background: #e2f7e2;
+    border-color: #50cd95;
+    color: #50cd95;
+}
+
+.incorrect {
+    background: #ff7f97;
+    border-color: #ff5d7c;
+    color: #ff5d7c;
+}
