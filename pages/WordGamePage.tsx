@@ -227,7 +227,7 @@ function WordGamePage() {
                     <div className="word__time">
                         최고점수 : <span className="score text-blue-500 text-2xl">{maxScore}</span> 점
                     </div>
-                    <button className={`${isPlaying && ' bg-gray-400 cursor-not-allowed '} " mt-8 bg-black text-white px-10 py-4 rounded-md border-2"`} onClick={gameStart} disabled={isPlaying}>
+                    <button className={`${isPlaying ? 'bg-gray-400 cursor-not-allowed' : 'bg-black'} mt-8 text-white px-10 py-4 rounded-md border-2"`} onClick={gameStart} disabled={isPlaying}>
                         게임 시작
                     </button>
                 </div>
