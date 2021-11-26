@@ -46,10 +46,33 @@ let koreanWords = [
     '제너시스',
     '페라리',
     '박하사탕',
+    '클렌징오일',
+    '비타민C',
+    '수건',
+    '그래픽카드',
+    '자동차보험',
+    '배낭여헹',
+    '아이패드 미니',
+    '스트레칭',
+    '스트레스',
+    '쟁반던지기',
+    '강원도',
+    '정선아리랑',
+    '국립박물관',
+    '국립국어원',
+    '기상청',
+    '허리케인',
+    '해리 케인',
+    '토네이도',
+    '이열치열',
+    '지록위마',
+    '새옹지마',
+    '일사불란',
+    '총부채원리금상환비율',
 ]
 
 function WordGamePage() {
-    const GAME_TIME = 3
+    const GAME_TIME = 7
     const [word, setWord] = useState('HaLo')
     const [form, setForm] = useState('')
     const [score, setScore] = useState(-1)
@@ -150,7 +173,7 @@ function WordGamePage() {
     return (
         <div className="page">
             <div className="header pt-10 text-center text-5xl">
-                <span className="font-bold text-blue-500">Typing Master</span>
+                <span className="font-bold text-blue-500 underline">Speed Master</span>
             </div>
 
             <div className="bg-gray-200 text-sm text-gray-500 leading-none border-2 border-gray-200 rounded-full inline-flex mt-10">

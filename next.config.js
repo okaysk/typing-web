@@ -1,4 +1,7 @@
-/** @type {import('next').NextConfig} */
+const isProd = process.env.NODE_ENV === 'production'
+const name = 'typing-web'
+
 module.exports = {
-  reactStrictMode: true,
+    assetPrefix: isProd ? `/${name}/` : '',
+    reactStrictMode: true,
 }

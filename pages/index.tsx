@@ -20,7 +20,7 @@ const Home: NextPage = () => {
                 <div>
                     <div className="header pt-10 text-center text-5xl">
                         <span>Welcome to </span>
-                        <span className="font-bold text-blue-500">Typing!</span>
+                        <span className="font-bold text-blue-500">Typing Master!</span>
                     </div>
                     <div className="menu-items m-20 flex gap-10">
                         <Link href="/WordGamePage">
@@ -28,7 +28,12 @@ const Home: NextPage = () => {
                                 <span>Word Game</span>
                             </button>
                         </Link>
-                        <Link href="/">
+                        <Link href="/TypingPracticePage">
+                            <button className="menu-item__column border-2 border-blue-400 p-10 hover:bg-blue-400 hover:text-white rounded-md">
+                                <span>Typing Practice</span>
+                            </button>
+                        </Link>
+                        <Link href="/PickPage">
                             <button className="menu-item__column border-2 border-blue-400 p-10 hover:bg-blue-400 hover:text-white rounded-md">
                                 <span>Pick a picture</span>
                             </button>

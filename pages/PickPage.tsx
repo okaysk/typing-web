@@ -1,4 +1,6 @@
-function ParagraphPage() {
+let words = ['horeshoe', '']
+
+function PickPage() {
     return (
         <div className="page">
             <img src="https://i.gifer.com/1uUh.gif" className="rounded-xl h-40 w-40" />
@@ -6,4 +8,4 @@ function ParagraphPage() {
     )
 }
 
-export default ParagraphPage
+export default PickPage
