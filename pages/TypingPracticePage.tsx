@@ -4,6 +4,9 @@ const alphabet = 'abcdefghijklmnopqrstuvwxyz '
 const kor_word = 'ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎ '
 let text = ['']
 
+const correctSound = typeof Audio !== 'undefined' && new Audio('/sound/correct_sound.mov')
+const incorrectSound = typeof Audio !== 'undefined' && new Audio('/sound/incorrect_sound.mp3')
+
 function TypingPracticePage() {
     const [input, setInput] = useState([''])
     const [word, setWord] = useState([''])
@@ -15,10 +18,25 @@ function TypingPracticePage() {
 
     const inputRef = useRef<any>([])
 
+    // For Typing Sound
+    const playSound = (audioFile: any) => {
+        audioFile.pause()
+        audioFile.play()
+    }
+
     const inputCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+        // Input
         const inputValue = e.target.value
         const lastChar = inputValue.substr(inputValue.length - 1)
+
+        console.dir(e.target)
+        console.log(`inputValue: ${inputValue}`)
+        console.log(`lastChar : ${lastChar}`)
+
         if (inputValue == word[index]) {
+            // Typing Sound
+            playSound(correctSound)
+
             // index가 5일때 정답을 맞추면, Reset
             if (index == 5) {
                 return setReset(true)
@@ -31,15 +49,15 @@ function TypingPracticePage() {
             setCorrect({ ...correct, [index]: 'correct' })
             setIndex(index + 1)
         } else {
+            // Typing Sound
+            playSound(incorrectSound)
+
             setInput({ ...input, [index]: lastChar })
             setCorrect({ ...correct, [index]: 'incorrect' })
             setTimeout(() => {
                 setInput({ ...input, [index]: '' })
                 setCorrect({ ...correct, [index]: '' })
-            }, 900)
-
-            // setInput([inputValue])
-            // 해당 element className에 incorrect 추가? 잠깐 보였다 사라지기 어케 하지.
+            }, 400)
         }
     }
 
@@ -125,7 +143,14 @@ function TypingPracticePage() {
                 </button>
             </div>
 
-            <button className="text-red-300 py-2 px-4">Sound Check</button>
+            <button
+                className="text-red-300 py-2 px-4"
+                onClick={() => {
+                    playSound(incorrectSound)
+                }}
+            >
+                Sound Check
+            </button>
 
             <div className="flex gap-14 mt-10">
                 {/* First */}
