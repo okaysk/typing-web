@@ -103,7 +103,7 @@ function TypingPracticePage() {
     }, [language])
 
     const keyboardFocus = () => {
-        if (index != 6) inputRef.current[index - 1].focus()
+        inputRef.current[index - 1]?.focus()
     }
 
     // Test input
