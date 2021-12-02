@@ -99,6 +99,7 @@ a {
     100% {
         background: #fff;
         transform: translate(0, 0);
+        color: red;
     }
 }
 
