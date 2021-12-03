@@ -45,35 +45,11 @@ a {
 }
 
 @keyframes incorrectEffect {
-    /* 0% {
-        background: #fff;
-        color: #b7bdc5;
-    }
-    25% {
-        transform: translateX(-10px);
-    }
-    50% {
-        background: #ff7f97;
-        border-color: #ff5d7c;
-        color: #ff5d7c;
-        transform: translateX(0px);
-    }
-    75% {
-        transform: translateX(10px);
-    }
-    100% {
-        background: #fff;
-        color: #b7bdc5;
-    } */
     0% {
         transform: translate(0, 0);
     }
     10.78571% {
         transform: translate(5px, 0);
-        /* background: #ff7f97;
-        border-color: #ff5d7c;
-        color: #ff5d7c; */
-        /* transform: translateX(0px); */
     }
     13.57143% {
         transform: translate(0, 0);

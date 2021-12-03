@@ -1,12 +1,14 @@
-import { useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 
-let someWords: any
+let sentences: any
 function ParagraphPage() {
     const [words, setWords] = useState([''])
     const [userInput, setUserInput] = useState('')
     const [answerIndex, setAnswerIndex] = useState(0)
-    const [correct, setCorrect] = useState([false, ''])
+    const [correct, setCorrect] = useState([''])
     const inputRef = useRef<any>()
+
+    console.log(`-------------------3 RE-RENDERING------------------`)
 
     const answer = [
         words.map((word, index) => (
@@ -19,19 +21,22 @@ function ParagraphPage() {
     async function getParagraph() {
         console.log(`getParagraph()`)
 
+        reset()
+
         // (Re)set - answerIndex, correct, userInput
 
         await fetch('http://metaphorpsum.com/paragraphs/1/1')
             .then(response => response.blob())
             .then(data => data.text())
             .then(text => {
+                sentences = text
                 const word_raw = text.split('')
+
                 console.log(`text : ${text}`)
                 console.log(`word_raw : ${word_raw}`)
                 // setWords({ ...word_raw })
                 setWords(word_raw)
                 console.log(`wordState: ${words}`) // batch Update때문에 값이 없는 것처럼 보임.
-                someWords = text.split(' ')
             })
             .catch(error => {
                 console.log(`errorRRRR: ${error}`)
@@ -45,6 +50,8 @@ function ParagraphPage() {
     keyboardFocus()
 
     const inputCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(`-------------------2 OnCange()------------------`)
+
         // Input
         const inputValue = e.target.value
         const lastChar = inputValue.charAt(inputValue.length - 1)
@@ -52,32 +59,65 @@ function ParagraphPage() {
         console.log(`last: ${lastChar}`)
         console.log(`userInput State : ${userInput}`)
 
+        if (e.target.accessKey == 'Backspace') {
+            console.log('backspace!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+        }
+
+        console.log(`\t111  userinput length : ${userInput.length} && answerIndex : ${answerIndex}`)
+
         setUserInput(inputValue)
 
+        // ReStart when the last word entered.
+        if (answerIndex == sentences?.length - 1) {
+            // reset & getNewParagraph
+            return getParagraph()
+        }
+
+        // Input Check
+        // 1. 맞으면
         if (lastChar == words[answerIndex]) {
-            console.log(`input is : ${inputValue}`)
             setCorrect({ ...correct, [answerIndex]: 'correct' })
             setAnswerIndex(answerIndex + 1)
-        } else {
-            // setUserInput(inputValue)
-            setCorrect({ ...correct, [answerIndex]: 'incorrect' })
-            setTimeout(() => {
-                // setUserInput('')
-                setCorrect({ ...correct, [answerIndex]: '' })
-            }, 900)
+        }
+        // 2. 틀리면
+        else {
+            // 2-1 틀리면
+            if (inputValue.length >= answerIndex) {
+                setCorrect({ ...correct, [answerIndex]: 'incorrect' })
+                setAnswerIndex(answerIndex + 1)
+            }
+            // 2-2 backspace라면
+            else {
+                setAnswerIndex(answerIndex - 1)
+                setCorrect({ ...correct, [answerIndex - 1]: '' })
+            }
         }
     }
 
-    const keyDown = (e: any) => {
-        if (e.keyCode === 8) {
-            setAnswerIndex(answerIndex - 1)
-        }
+    const reset = () => {
+        setCorrect([''])
+        setAnswerIndex(0)
+        setUserInput('')
     }
+
+    // const keyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // console.log(`-------------------1 KEYDOWN()------------------`)
+    // console.log(`keydown : ${e.key}`)
+    // if (e.key === 'Backspace') {
+    //     console.log(`\t\tkeydown: ${answerIndex}`)
+    //     // setAnswerIndex(answerIndex - 1)
+    //     // setCorrect({ ...correct, [answerIndex]: '' })
+    // }
+    // }
 
     return (
-        <div className="page">
+        <div className="page" onClick={keyboardFocus}>
             <div>
-                <div>Test</div>
+                <div className="text-4xl text-blue-300">Quotes Master v1.4</div>
+                <div>
+                    Index : {answerIndex} & senteces.length : {sentences?.length}
+                </div>
+                <div>Input length : {userInput.length}</div>
             </div>
             <div className="w-2/3 relative">
                 {answer}
@@ -86,7 +126,7 @@ function ParagraphPage() {
                     type="text"
                     value={userInput}
                     onChange={e => inputCheck(e)}
-                    onKeyDown={e => keyDown(e)}
+                    // onKeyDown={e => keyDown(e)}
                     ref={el => (inputRef.current = el)}
                 ></input>
 
@@ -99,7 +139,7 @@ function ParagraphPage() {
                 {/* <div className="paragraph-sample text-4xl text-gray-400 leading-loose">{paragraph}</div> */}
             </div>
             <img src="https://i.gifer.com/1uUh.gif" className="rounded-xl h-40 w-40" />
-            <button className="border-2 bg-gray-200 py-3 px-6 rounded-lg mt-4" onClick={getParagraph}>
+            <button className="border-2 bg-gray-200 text-blue-400 py-3 px-6 rounded-lg mt-4" onClick={getParagraph}>
                 Get Paragraph!
             </button>
         </div>
