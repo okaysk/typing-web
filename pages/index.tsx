@@ -11,7 +11,8 @@ const Home: NextPage = () => {
             <Head>
                 <title>Typing Practice</title>
                 <meta name="description" content="You can type anything." />
-                <link rel="icon" href="/favicon.ico" />
+                {/* <link rel="icon" href="/favicon.ico" /> */}
+                <link rel="icon" href="/keyboard.png" />
                 {/* <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> */}
             </Head>
             <Script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" strategy="beforeInteractive" />
